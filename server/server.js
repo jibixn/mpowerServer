@@ -9,7 +9,7 @@ const port = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-let messages = []; // Temporary storage (messages will be lost when server restarts)
+let messages = []; // Temporary storage for messages (they are lost when the server restarts)
 
 // API to send a message (POST /send)
 app.post("/send", (req, res) => {
@@ -27,19 +27,7 @@ app.post("/send", (req, res) => {
 
 // API to get messages (GET /messages)
 app.get("/messages", (req, res) => {
-    const { name, text } = req.query;
-
-    // Filter messages by name and text if provided
-    let filteredMessages = messages;
-    
-    if (name) {
-        filteredMessages = filteredMessages.filter(message => message.name === name);
-    }
-    if (text) {
-        filteredMessages = filteredMessages.filter(message => message.text.includes(text));
-    }
-
-    res.json({ messages: filteredMessages });
+    res.json({ messages: messages });
 });
 
 // Start server
